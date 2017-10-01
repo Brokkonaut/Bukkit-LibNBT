@@ -15,3 +15,10 @@ nbproject/*
 */target/*
 */dependency-reduced-pom.xml
 /target/
+
+*/.settings
+*/.classpath
+*/.project
+*/.gitignore
+.project
+.settings
