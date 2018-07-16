@@ -262,7 +262,7 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
 
     public ListTag fromNativeList(String parentName, NBTTagList tag) {
         try {
-            TagType type = TagType.values()[tag.size()];
+            TagType type = TagType.values()[tag.d()];
             if (type == TagType.END) {
                 type = TagType.BYTE;
             }
