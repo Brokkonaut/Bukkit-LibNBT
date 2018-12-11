@@ -2,18 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.cyberiantiger.minecraft.unsafe.v1_12_R1;
+package org.cyberiantiger.minecraft.unsafe.v1_12_R1_1;
 
 import java.io.IOException;
-import net.minecraft.server.v1_12_R1.Chunk;
-import net.minecraft.server.v1_12_R1.ChunkRegionLoader;
-import net.minecraft.server.v1_12_R1.ExceptionWorldConflict;
-import net.minecraft.server.v1_12_R1.IAsyncChunkSaver;
-import net.minecraft.server.v1_12_R1.IChunkLoader;
-import org.cyberiantiger.minecraft.unsafe.VersionedNMS;
 
-// Safe not to extend ChunkRegionLoader - CB does not cast to ChunkRegionLoader anywhere.
+import net.minecraft.server.v1_12_R1.*;
 
+/**
+ * Version for Spigot 1.12.2
+ */
 public final class InstanceChunkLoader implements IChunkLoader, IAsyncChunkSaver {
     private final ChunkRegionLoader loadLoader;
     private final ChunkRegionLoader saveLoader;
@@ -32,7 +29,7 @@ public final class InstanceChunkLoader implements IChunkLoader, IAsyncChunkSaver
      * @throws IOException When an IOException occurs.
      */
     @Override
-    public Chunk a(net.minecraft.server.v1_12_R1.World world, int i, int j) throws IOException {
+    public Chunk a(World world, int i, int j) throws IOException {
         if (saveLoader.chunkExists(i, j)) {
             return saveLoader.a(world, i, j);
         }
@@ -47,21 +44,8 @@ public final class InstanceChunkLoader implements IChunkLoader, IAsyncChunkSaver
      * @throws ExceptionWorldConflict If more than one Minecraft has opened the world.
      */
     @Override
-    public void a(net.minecraft.server.v1_12_R1.World world, Chunk chunk) throws IOException, ExceptionWorldConflict {
-        saveLoader.a(world, chunk);
-    }
-
-    /**
-     * Some sort of save operation.
-     * @param world World to perform the save for.
-     * @param chunk Chunk to save.
-     * @throws IOException
-     */
-    @Override
-    public void b(net.minecraft.server.v1_12_R1.World world, Chunk chunk) throws IOException {
-        // Assume this is supposed to be some sort of save operation.
-        // Can't tell from NMS - empty method.
-        saveLoader.b(world, chunk);
+    public void saveChunk(World world, Chunk chunk, boolean unload) throws IOException, ExceptionWorldConflict {
+        saveLoader.saveChunk(world, chunk, unload);
     }
 
     /**

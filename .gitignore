@@ -22,3 +22,5 @@ nbproject/*
 */.gitignore
 .project
 .settings
+.idea
+*.iml

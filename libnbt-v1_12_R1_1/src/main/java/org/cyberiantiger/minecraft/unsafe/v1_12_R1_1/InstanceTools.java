@@ -2,23 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.cyberiantiger.minecraft.unsafe.v1_11_R1;
+package org.cyberiantiger.minecraft.unsafe.v1_12_R1_1;
 
 import java.io.File;
-import net.minecraft.server.v1_11_R1.EntityTracker;
-import net.minecraft.server.v1_11_R1.EnumDifficulty;
-import net.minecraft.server.v1_11_R1.IDataManager;
-import net.minecraft.server.v1_11_R1.IWorldAccess;
-import net.minecraft.server.v1_11_R1.MethodProfiler;
-import net.minecraft.server.v1_11_R1.MinecraftServer;
-import net.minecraft.server.v1_11_R1.WorldData;
-import net.minecraft.server.v1_11_R1.WorldManager;
-import net.minecraft.server.v1_11_R1.WorldServer;
-import org.bukkit.craftbukkit.v1_11_R1.scoreboard.CraftScoreboard;
+
+import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.craftbukkit.v1_12_R1.scoreboard.CraftScoreboard;
 import org.bukkit.Difficulty;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
-import org.bukkit.craftbukkit.v1_11_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_12_R1.CraftServer;
 import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.generator.ChunkGenerator;
@@ -48,7 +41,7 @@ public final class InstanceTools extends AbstractInstanceTools {
         CraftServer craftServer = (CraftServer) plugin.getServer();
 
         IDataManager dataManager =
-                new InstanceDataManager(plugin, instanceName, source, destination, craftServer.getServer().getDataConverterManager());
+                new InstanceDataManager(plugin, instanceName, source, destination, console.dataConverterManager);
 
         // XXX: Copy paste from craftbukkit.
         int dimension = 10 + console.worlds.size();

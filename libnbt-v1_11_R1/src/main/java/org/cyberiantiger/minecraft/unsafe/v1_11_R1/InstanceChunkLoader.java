@@ -5,7 +5,6 @@
 package org.cyberiantiger.minecraft.unsafe.v1_11_R1;
 
 import java.io.IOException;
-
 import net.minecraft.server.v1_11_R1.Chunk;
 import net.minecraft.server.v1_11_R1.ChunkRegionLoader;
 import net.minecraft.server.v1_11_R1.ExceptionWorldConflict;
@@ -60,9 +59,11 @@ public final class InstanceChunkLoader implements IChunkLoader, IAsyncChunkSaver
     }
 
     @Override
-    public boolean a(int arg0, int arg1) {
-        // maybe
-        return loadLoader.a(arg0, arg1);
+    public boolean a(int x, int z) {
+        if (saveLoader.a(x, z)) {
+            return true;
+        }
+        return loadLoader.a(x, z);
     }
-
+    
 }

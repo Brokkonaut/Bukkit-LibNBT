@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import net.minecraft.server.v1_11_R1.BlockPosition;
 import net.minecraft.server.v1_11_R1.IBlockData;
 import net.minecraft.server.v1_11_R1.NBTBase;
@@ -29,7 +28,6 @@ import net.minecraft.server.v1_11_R1.NBTTagShort;
 import net.minecraft.server.v1_11_R1.NBTTagString;
 import net.minecraft.server.v1_11_R1.TileEntity;
 import net.minecraft.server.v1_11_R1.WorldServer;
-
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
@@ -59,43 +57,43 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
 
     public NBTTagCompound toNativeCompound(CompoundTag tag) {
         NBTTagCompound result = new NBTTagCompound();
-        for (Map.Entry<String, Tag> e : tag.getValue().entrySet()) {
+        for (Map.Entry<String,Tag> e : tag.getValue().entrySet()) {
             NBTBase base;
             String name = e.getKey();
             Tag t = e.getValue();
             switch (t.getType()) {
                 case BYTE:
-                    base = new NBTTagByte(((ByteTag) t).getRawValue());
+                    base = new NBTTagByte(((ByteTag)t).getRawValue());
                     break;
                 case BYTE_ARRAY:
-                    base = new NBTTagByteArray(((ByteArrayTag) t).getValue());
+                    base = new NBTTagByteArray(((ByteArrayTag)t).getValue());
                     break;
                 case COMPOUND:
-                    base = toNativeCompound((CompoundTag) t);
+                    base = toNativeCompound((CompoundTag)t);
                     break;
                 case DOUBLE:
-                    base = new NBTTagDouble(((DoubleTag) t).getRawValue());
+                    base = new NBTTagDouble(((DoubleTag)t).getRawValue());
                     break;
                 case FLOAT:
-                    base = new NBTTagFloat(((FloatTag) t).getRawValue());
+                    base = new NBTTagFloat(((FloatTag)t).getRawValue());
                     break;
                 case INT:
-                    base = new NBTTagInt(((IntTag) t).getRawValue());
+                    base = new NBTTagInt(((IntTag)t).getRawValue());
                     break;
                 case INT_ARRAY:
-                    base = new NBTTagIntArray(((IntArrayTag) t).getValue());
+                    base = new NBTTagIntArray(((IntArrayTag)t).getValue());
                     break;
                 case LIST:
-                    base = toNativeList((ListTag) t);
+                    base = toNativeList((ListTag)t);
                     break;
                 case LONG:
-                    base = new NBTTagLong(((LongTag) t).getRawValue());
+                    base = new NBTTagLong(((LongTag)t).getRawValue());
                     break;
                 case SHORT:
-                    base = new NBTTagShort(((ShortTag) t).getRawValue());
+                    base = new NBTTagShort(((ShortTag)t).getRawValue());
                     break;
                 case STRING:
-                    base = new NBTTagString(((StringTag) t).getValue());
+                    base = new NBTTagString(((StringTag)t).getValue());
                     break;
                 default:
                     // Can't be reached.
@@ -117,7 +115,7 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
                 break;
             case BYTE_ARRAY:
                 for (ByteArrayTag t : (ByteArrayTag[]) tag.getValue()) {
-                    result.add(new NBTTagByteArray(t.getValue()));
+                    result.add(new NBTTagByteArray(((ByteArrayTag) t).getValue()));
                 }
                 break;
             case COMPOUND:
@@ -147,7 +145,7 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
                 break;
             case LIST:
                 for (ListTag t : (ListTag[]) tag.getValue()) {
-                    result.add(toNativeList(t));
+                    result.add(toNativeList((ListTag) t));
                 }
             case LONG:
                 for (LongTag t : (LongTag[]) tag.getValue()) {
@@ -192,7 +190,7 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
             try {
                 Map<String, Tag> result = new HashMap<String, Tag>();
                 Map<String, NBTBase> map = (Map<String, NBTBase>) COMPOUND_MAP_FIELD.get(tag);
-                for (Map.Entry<String, NBTBase> e : map.entrySet()) {
+                for (Map.Entry<String,NBTBase> e : map.entrySet()) {
                     String name = e.getKey();
                     NBTBase b = e.getValue();
                     switch (TagType.values()[b.getTypeId()]) {
@@ -271,12 +269,12 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
             switch (type) {
                 case BYTE:
                     for (int i = 0; i < list.size(); i++) {
-                        t[i] = new ByteTag(((NBTTagByte) list.get(i)).g());
+                        t[i] = new ByteTag(((NBTTagByte)list.get(i)).g());
                     }
                     break;
                 case BYTE_ARRAY:
                     for (int i = 0; i < tag.size(); i++) {
-                        t[i] = new ByteArrayTag(((NBTTagByteArray) list.get(i)).c());
+                        t[i] = new ByteArrayTag(((NBTTagByteArray)list.get(i)).c());
                     }
                     break;
                 case COMPOUND:
@@ -368,9 +366,8 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
     @Override
     public CompoundTag readItemStack(ItemStack stack) {
         net.minecraft.server.v1_11_R1.ItemStack nativeStack = CraftItemStack.asNMSCopy(stack);
-        if (nativeStack == null) {
+        if (nativeStack == null) 
             return null;
-        }
         NBTTagCompound compound = new NBTTagCompound();
         nativeStack.save(compound);
         return fromNativeCompound(compound);
@@ -378,8 +375,8 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
 
     @Override
     public ItemStack createItemStack(CompoundTag tag) {
-        net.minecraft.server.v1_11_R1.ItemStack nativeStack = new net.minecraft.server.v1_11_R1.ItemStack((net.minecraft.server.v1_11_R1.Item) null);
-        nativeStack.load(toNativeCompound(tag));
+        net.minecraft.server.v1_11_R1.ItemStack nativeStack = new net.minecraft.server.v1_11_R1.ItemStack((net.minecraft.server.v1_11_R1.Item)null);
+        nativeStack.setTag(toNativeCompound(tag));
         return CraftItemStack.asCraftMirror(nativeStack);
     }
 
@@ -393,7 +390,7 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
 
     @Override
     public void updateEntity(Entity entity, CompoundTag tag) {
-        CraftEntity craftEntity = (CraftEntity) entity;
+        CraftEntity craftEntity = (CraftEntity)entity;
         craftEntity.getHandle().f(toNativeCompound(tag));
     }
 
@@ -401,9 +398,8 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
     public Entity getEntityByUUID(World world, UUID id) {
         CraftWorld craftWorld = (CraftWorld) world;
         net.minecraft.server.v1_11_R1.Entity entity = craftWorld.getHandle().getEntity(id);
-        if (entity == null) {
+        if (entity == null)
             return null;
-        }
         return entity.getBukkitEntity();
     }
 

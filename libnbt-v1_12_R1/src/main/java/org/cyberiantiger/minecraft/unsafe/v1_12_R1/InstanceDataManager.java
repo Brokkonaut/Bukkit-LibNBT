@@ -4,11 +4,14 @@
  */
 package org.cyberiantiger.minecraft.unsafe.v1_12_R1;
 
+import com.google.common.io.Files;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 import java.util.logging.Level;
-
 import net.minecraft.server.v1_12_R1.ChunkRegionLoader;
 import net.minecraft.server.v1_12_R1.DataConverterManager;
 import net.minecraft.server.v1_12_R1.IChunkLoader;
@@ -19,10 +22,7 @@ import net.minecraft.server.v1_12_R1.WorldData;
 import net.minecraft.server.v1_12_R1.WorldProvider;
 import net.minecraft.server.v1_12_R1.WorldProviderHell;
 import net.minecraft.server.v1_12_R1.WorldProviderTheEnd;
-
 import org.bukkit.plugin.Plugin;
-
-import com.google.common.io.Files;
 
 // Have to extend WorldNBTStorage - CB casts IDataManager to it in World.getWorldFolder()
 
@@ -58,7 +58,7 @@ class InstanceDataManager extends ServerNBTManager {
         WorldData result = null;
         if (file1.exists()) {
             try {
-                nbttagcompound = NBTCompressedStreamTools.a((new FileInputStream(file1)));
+                nbttagcompound = NBTCompressedStreamTools.a((InputStream) (new FileInputStream(file1)));
                 nbttagcompound1 = nbttagcompound.getCompound("Data");
                 result = new WorldData(nbttagcompound1);
             } catch (Exception exception) {
@@ -68,7 +68,7 @@ class InstanceDataManager extends ServerNBTManager {
             file1 = new File(loadDataFolder, WORLD_DATA_OLD);
             if (file1.exists()) {
                 try {
-                    nbttagcompound = NBTCompressedStreamTools.a((new FileInputStream(file1)));
+                    nbttagcompound = NBTCompressedStreamTools.a((InputStream) (new FileInputStream(file1)));
                     nbttagcompound1 = nbttagcompound.getCompound("Data");
                     result = new WorldData(nbttagcompound1);
                 } catch (Exception exception1) {
@@ -119,4 +119,8 @@ class InstanceDataManager extends ServerNBTManager {
         return result;
     }
 
+    @Override
+    public UUID getUUID() {
+        return UUID.nameUUIDFromBytes( ("libnbt:" + world).getBytes(StandardCharsets.UTF_8) );
+    }
 }
