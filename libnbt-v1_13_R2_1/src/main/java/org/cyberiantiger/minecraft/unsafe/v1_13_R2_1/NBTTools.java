@@ -341,7 +341,7 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
     @Override
     public void writeTileEntity(Block block, CompoundTag tag) {
         CraftWorld craftWorld = (CraftWorld) block.getWorld();
-        TileEntity tileEntity = craftWorld.getTileEntityAt(block.getX(), block.getY(), block.getZ());
+        TileEntity tileEntity = craftWorld.getHandle().getTileEntity(new BlockPosition(block.getX(), block.getY(), block.getZ()));
         if (tileEntity == null) {
             return;
         }
@@ -356,7 +356,7 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
     @Override
     public CompoundTag readTileEntity(Block block) {
         CraftWorld craftWorld = (CraftWorld) block.getWorld();
-        TileEntity tileEntity = craftWorld.getTileEntityAt(block.getX(), block.getY(), block.getZ());
+        TileEntity tileEntity = craftWorld.getHandle().getTileEntity(new BlockPosition(block.getX(), block.getY(), block.getZ()));
         if (tileEntity == null) {
             return null;
         }
