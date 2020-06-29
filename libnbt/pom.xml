@@ -101,5 +101,10 @@
       <artifactId>libnbt-v1_15_R1</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>libnbt-v1_16_R1</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 </project>
