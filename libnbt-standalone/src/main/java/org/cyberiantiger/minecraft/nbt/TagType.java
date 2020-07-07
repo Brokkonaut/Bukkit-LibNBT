@@ -2,7 +2,6 @@ package org.cyberiantiger.minecraft.nbt;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -207,7 +206,7 @@ public enum TagType {
         }
 
         public CompoundTag read(TagInputStream in) throws IOException {
-            Map<String, Tag> values = new HashMap<String, Tag>();
+            Map<String, Tag> values = new HashMap<>();
             while (true) {
                 TagTuple<? extends Tag> tag = in.readTag();
                 if (tag.getValue().getType() == TagType.END) {
@@ -246,8 +245,32 @@ public enum TagType {
         public IntArrayTag[] newArray(int size) {
             return new IntArrayTag[size];
         }
+    },
+    LONG_ARRAY(LongArrayTag.class, long[].class) {
+
+        public void write(Tag tag, TagOutputStream out) throws IOException {
+            long[] value = ((LongArrayTag) tag).getValue();
+            out.writeInt(value.length);
+            for (int i = 0; i < value.length; i++) {
+                out.writeLong(value[i]);
+            }
+        }
+
+        public LongArrayTag read(TagInputStream in) throws IOException {
+            int length = in.readInt();
+            long[] value = new long[length];
+            for (int i = 0; i < length; i++) {
+                value[i] = in.readLong();
+            }
+            return new LongArrayTag(value);
+        }
+
+        @Override
+        public LongArrayTag[] newArray(int size) {
+            return new LongArrayTag[size];
+        }
     };
-    
+
     private final Class<? extends Tag> tagClass;
     private final Class<?> valueClass;
 

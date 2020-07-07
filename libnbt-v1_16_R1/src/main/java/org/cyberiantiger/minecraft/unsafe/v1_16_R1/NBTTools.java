@@ -22,6 +22,7 @@ import net.minecraft.server.v1_16_R1.NBTTagInt;
 import net.minecraft.server.v1_16_R1.NBTTagIntArray;
 import net.minecraft.server.v1_16_R1.NBTTagList;
 import net.minecraft.server.v1_16_R1.NBTTagLong;
+import net.minecraft.server.v1_16_R1.NBTTagLongArray;
 import net.minecraft.server.v1_16_R1.NBTTagShort;
 import net.minecraft.server.v1_16_R1.NBTTagString;
 import net.minecraft.server.v1_16_R1.TileEntity;
@@ -41,6 +42,7 @@ import org.cyberiantiger.minecraft.nbt.FloatTag;
 import org.cyberiantiger.minecraft.nbt.IntArrayTag;
 import org.cyberiantiger.minecraft.nbt.IntTag;
 import org.cyberiantiger.minecraft.nbt.ListTag;
+import org.cyberiantiger.minecraft.nbt.LongArrayTag;
 import org.cyberiantiger.minecraft.nbt.LongTag;
 import org.cyberiantiger.minecraft.nbt.ShortTag;
 import org.cyberiantiger.minecraft.nbt.StringTag;
@@ -93,6 +95,9 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
                     break;
                 case STRING:
                     base = NBTTagString.a(((StringTag) t).getValue());
+                    break;
+                case LONG_ARRAY:
+                    base = new NBTTagLongArray(((LongArrayTag) t).getValue());
                     break;
                 default:
                     // Can't be reached.
@@ -161,6 +166,11 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
                     result.add(NBTTagString.a(t.getValue()));
                 }
                 break;
+            case LONG_ARRAY:
+                for (LongArrayTag t : (LongArrayTag[]) tag.getValue()) {
+                    result.add(new NBTTagLongArray(t.getValue()));
+                }
+                break;
             case END:
                 break;
         }
@@ -207,6 +217,9 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
                         break;
                     case STRING:
                         result.put(name, new StringTag(((NBTTagString) b).asString()));
+                        break;
+                    case LONG_ARRAY:
+                        result.put(name, new LongArrayTag(((NBTTagLongArray) b).getLongs()));
                         break;
                     case END:
                         break;
@@ -286,6 +299,11 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
                 case STRING:
                     for (int i = 0; i < tag.size(); i++) {
                         t[i] = new StringTag(((NBTTagString) tag.get(i)).asString());
+                    }
+                    break;
+                case LONG_ARRAY:
+                    for (int i = 0; i < tag.size(); i++) {
+                        t[i] = new LongArrayTag(((NBTTagLongArray) tag.get(i)).getLongs());
                     }
                     break;
             }
