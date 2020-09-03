@@ -4,9 +4,7 @@
  */
 package org.cyberiantiger.minecraft;
 
-import java.util.UUID;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 

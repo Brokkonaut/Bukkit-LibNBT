@@ -4,6 +4,8 @@
  */
 package org.cyberiantiger.minecraft.nbt;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 import java.io.StringReader;
 import org.junit.After;
@@ -11,7 +13,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -20,30 +21,30 @@ import static org.junit.Assert.*;
 public class MojangsonParserTest {
     public MojangsonParserTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
 
     private void testParse(String s) throws IOException {
         MojangsonParser parser = new MojangsonParser(new StringReader(s));
-        TagTuple result = parser.parse();
+        TagTuple<?> result = parser.parse();
         System.out.println("Parsed: " + result + " from " + s);
         s = result.toString();
         parser = new MojangsonParser(new StringReader(result.toString()));
-        TagTuple result2 = parser.parse();
+        TagTuple<?> result2 = parser.parse();
         System.out.println("Parsed: " + result + " from " + result2);
         assertEquals(result, result2);
     }
