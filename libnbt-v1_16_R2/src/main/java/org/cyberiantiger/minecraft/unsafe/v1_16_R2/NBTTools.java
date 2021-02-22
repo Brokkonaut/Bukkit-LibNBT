@@ -321,11 +321,11 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
         if (tileEntity == null) {
             return;
         }
-        tileEntity.save(toNativeCompound(tag));
-        tileEntity.update();
         BlockPosition pos = new BlockPosition(block.getX(), block.getY(), block.getZ());
         WorldServer handle = craftWorld.getHandle();
         IBlockData blockData = handle.getType(pos);
+        tileEntity.load(blockData, toNativeCompound(tag));
+        tileEntity.update();
         craftWorld.getHandle().notify(new BlockPosition(block.getX(), block.getY(), block.getZ()), blockData, blockData, 3);
     }
 
@@ -337,9 +337,8 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
         if (tileEntity == null) {
             return null;
         }
-        IBlockData blockData = craftWorld.getHandle().getType(pos);
         NBTTagCompound tag = new NBTTagCompound();
-        tileEntity.load(blockData, tag);
+        tileEntity.save(tag);
         return fromNativeCompound(tag);
     }
 
