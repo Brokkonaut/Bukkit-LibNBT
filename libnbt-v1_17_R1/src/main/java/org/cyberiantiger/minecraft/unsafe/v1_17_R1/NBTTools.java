@@ -5,6 +5,7 @@
 package org.cyberiantiger.minecraft.unsafe.v1_17_R1;
 
 import java.lang.reflect.Array;
+import java.util.AbstractList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -225,72 +226,73 @@ public final class NBTTools implements org.cyberiantiger.minecraft.unsafe.NBTToo
             if (type == TagType.END) {
                 type = TagType.BYTE;
             }
+            AbstractList<net.minecraft.nbt.Tag> tagAsList = tag;
             @SuppressWarnings("rawtypes")
             Tag[] t = (Tag[]) Array.newInstance(type.getTagClass(), tag.size());
             switch (type) {
                 case BYTE:
                 case END:
                     for (int i = 0; i < tag.size(); i++) {
-                        t[i] = new ByteTag(((net.minecraft.nbt.ByteTag) tag.get(i)).getAsByte());
+                        t[i] = new ByteTag(((net.minecraft.nbt.ByteTag) tagAsList.get(i)).getAsByte());
                     }
                     break;
                 case BYTE_ARRAY:
                     for (int i = 0; i < tag.size(); i++) {
-                        t[i] = new ByteArrayTag(((net.minecraft.nbt.ByteArrayTag) tag.get(i)).getAsByteArray());
+                        t[i] = new ByteArrayTag(((net.minecraft.nbt.ByteArrayTag) tagAsList.get(i)).getAsByteArray());
                     }
                     break;
                 case COMPOUND:
                     for (int i = 0; i < tag.size(); i++) {
-                        if (tag.get(i) == null) {
+                        if (tagAsList.get(i) == null) {
                             t[i] = new CompoundTag();
                         } else {
-                            t[i] = fromNativeCompound((net.minecraft.nbt.CompoundTag) tag.get(i));
+                            t[i] = fromNativeCompound(((net.minecraft.nbt.CompoundTag) tagAsList.get(i)));
                         }
                     }
                     break;
                 case DOUBLE:
                     for (int i = 0; i < tag.size(); i++) {
-                        t[i] = new DoubleTag(((net.minecraft.nbt.DoubleTag) tag.get(i)).getAsDouble());
+                        t[i] = new DoubleTag(((net.minecraft.nbt.DoubleTag) tagAsList.get(i)).getAsDouble());
                     }
                     break;
                 case FLOAT:
                     for (int i = 0; i < tag.size(); i++) {
-                        t[i] = new FloatTag(((net.minecraft.nbt.FloatTag) tag.get(i)).getAsFloat());
+                        t[i] = new FloatTag(((net.minecraft.nbt.FloatTag) tagAsList.get(i)).getAsFloat());
                     }
                     break;
                 case INT:
                     for (int i = 0; i < tag.size(); i++) {
-                        t[i] = new IntTag(((net.minecraft.nbt.IntTag) tag.get(i)).getAsInt());
+                        t[i] = new IntTag(((net.minecraft.nbt.IntTag) tagAsList.get(i)).getAsInt());
                     }
                     break;
                 case INT_ARRAY:
                     for (int i = 0; i < tag.size(); i++) {
-                        t[i] = new IntArrayTag(((net.minecraft.nbt.IntArrayTag) tag.get(i)).getAsIntArray());
+                        t[i] = new IntArrayTag(((net.minecraft.nbt.IntArrayTag) tagAsList.get(i)).getAsIntArray());
                     }
                     break;
                 case LIST:
                     for (int i = 0; i < tag.size(); i++) {
-                        t[i] = fromNativeList((net.minecraft.nbt.ListTag) tag.get(i));
+                        t[i] = fromNativeList((net.minecraft.nbt.ListTag) tagAsList.get(i));
                     }
                     break;
                 case LONG:
                     for (int i = 0; i < tag.size(); i++) {
-                        t[i] = new LongTag(((net.minecraft.nbt.LongTag) tag.get(i)).getAsLong());
+                        t[i] = new LongTag(((net.minecraft.nbt.LongTag) tagAsList.get(i)).getAsLong());
                     }
                     break;
                 case SHORT:
                     for (int i = 0; i < tag.size(); i++) {
-                        t[i] = new ShortTag(((net.minecraft.nbt.ShortTag) tag.get(i)).getAsShort());
+                        t[i] = new ShortTag(((net.minecraft.nbt.ShortTag) tagAsList.get(i)).getAsShort());
                     }
                     break;
                 case STRING:
                     for (int i = 0; i < tag.size(); i++) {
-                        t[i] = new StringTag(((net.minecraft.nbt.StringTag) tag.get(i)).getAsString());
+                        t[i] = new StringTag(((net.minecraft.nbt.StringTag) tagAsList.get(i)).getAsString());
                     }
                     break;
                 case LONG_ARRAY:
                     for (int i = 0; i < tag.size(); i++) {
-                        t[i] = new LongArrayTag(((net.minecraft.nbt.LongArrayTag) tag.get(i)).getAsLongArray());
+                        t[i] = new LongArrayTag(((net.minecraft.nbt.LongArrayTag) tagAsList.get(i)).getAsLongArray());
                     }
                     break;
             }
